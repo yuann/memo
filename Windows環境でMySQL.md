@@ -1,31 +1,64 @@
 # Windows環境でMySQL
 
 ## サーバー側
-MySQL Community Server 5.5.44 をインストールする。
+### インストール
+MySQL Community Server 5.6 をインストールする。
 
-1. http://dev.mysql.com/downloads/mysql/ から「Windows (x86, 64-bit), MSI Installer」をダウンロード
-1. mysql-5.5.44-winx64.msi を実行
-1. 「Choose Setup Type」で Custom を選択
-1. 「Custom Setpup」で Location を `E:\System\MySQL\MySQL Server 5.5\` に変更
-1. Install
-1. 「Launch the MySQL Install Configration Wizard」にチェックが入った状態で Finish
-1. MySQL Server Instance Configuration
-  - configuration type: 「Detailed Configration」を選択
-  - server type: 今回は「Developer Machine」を選択
-  - database usage: 「Multifunctional Database」を選択
-  - InnoDB Tablespace: `E:\System\MySQL\data` に変更
-  - approximate number of concurrent connections to the server: 「Decision Support (DSS)/OLAP」を選択
-  - networking options: そのまま
-  - default character set: 「Best Support For Multilingualism」を選択
-  - Install As Windows Server: チェックを入れたまま
-  - Include Bin Directory in Windows PATH: チェックを入れる
-  - Modify Security Settings: パスワードを設定
+1. http://dev.mysql.com/downloads/mysql/ から「Windows (x86, 32-bit), MSI Installer」をダウンロード (64bitの分も含まれる)
+1. mysql-installer-community-5.6.*.msi を実行
+1. Choosing a Setup Type
+  - Custom を選択
+1. Select Products and Features
+  - 「MySQL Server 5.6.* - X64」を選択
+  - 右下の「Advanced Option」をクリックし、Pathを設定
+    - Install Directory: `E:\System\MySQL\MySQL Server 5.6`
+    - Data Directory: `E:\System\MySQL\data`
+1. Installation
+  - Execute
+1. Type and Networking
+  - Config Type: 今回は「Development Machine」を選択
+1. Account and Roles
+  - パスワードを設定
+1. Windows Service
+  - 「Configure MySQL Server as a Windows Service」にチェックを入れたまま
+  - 「Standard System Account」を選択したまま
+1. Apply Server Configuration
   - Execute
   - Finish
 
+### 権限追加
+外部からデータベース「test」にユーザー「user1」で接続できるようにする
+
+1. 「MySQL 5.6 Command Line Client」を起動
+1. インストール時に設定したパスワードを入力
+
+```
+mysql> grant select,insert,update,delete on test.* to user1@"%" identified by 'user1pass';
+mysql> flush privileges;
+mysql> select Host, User from mysql.user;
+```
+
+### 権限削除
+
+```
+mysql> delete from mysql.user where user = 'user1';
+mysql> flush privileges;
+mysql> select Host, User from mysql.user;
+```
+
+### アンインストール (SQL Server 5.5)
+
+1. コントロールパネル > システムとセキュリティ > 管理ツール > サービス > MySQL を停止
+1. コマンドプロンプトを管理者権限で起動
+1. `cd /d "E:\System\MySQL\MySQL Server 5.5\bin"`
+1. `mysqld -remove MySQL`
+1. コントロールパネル > プログラム > プログラムと機能 > MySQL Server 5.5 をアンインストール
+1. システム環境変数「Path」から`E:\System\MySQL\MySQL Server 5.5\bin;`を除去
+1. 必要に応じて `E:\System\MySQL\MySQL Server 5.5` を削除
+
 ## クライアント側
 
-1. Visual Studio 2013 でプロジェクトを作成
+1. Visual Studio でプロジェクトを作成
   - テンプレート: C#/Windowsフォームアプリケーション
   - プロジェクト名: MySQLTest
 - パッケージマネージャコンソールで以下を実行
@@ -58,7 +91,7 @@ namespace MySQLTest
         private void button1_Click(object sender, EventArgs e)
         {
             DateTime resultDate;
-            using (var conn = new MySqlConnection("Server=localhost;Database=;Uid=root;Pwd=******"))
+            using (var conn = new MySqlConnection("Server=<サーバー名>;Database=test;Uid=test1;Pwd=<パスワード>"))
             {
                 conn.Open();
                 resultDate = conn.Query<DateTime>("SELECT NOW();").Single();
