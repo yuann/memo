@@ -55,6 +55,6 @@ namespace PostgresTest
 }
 ```
 
-## 外部リンク
+## 参考
 
 - [WindowsでPostgreSQLを使ってみよう](http://lets.postgresql.jp/documents/tutorial/windows/)
