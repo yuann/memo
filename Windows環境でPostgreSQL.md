@@ -14,6 +14,16 @@ PostgreSQL 9.4.4 をインストールする。
   - Locale: `C`
 1. 「Stack Builder ...」のチェックを外して Finish
 
+### 別の端末からの接続を許可
+[pg_hba.conf](https://www.postgresql.jp/document/9.4/html/auth-pg-hba-conf.html) に許可したい端末のアドレスを設定。
+
+```
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    all             all             <アドレス>                 md5
+```
+
+サービス「postgresql-x64-9.4」を再起動
+
 ## クライアント側
 
 1. Visual Studio でプロジェクトを作成
