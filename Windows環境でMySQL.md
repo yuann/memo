@@ -46,14 +46,16 @@ mysql> flush privileges;
 mysql> select Host, User from mysql.user;
 ```
 
-### アンインストール (SQL Server 5.5)
+### アンインストール
 
-1. コントロールパネル > システムとセキュリティ > 管理ツール > サービス > MySQL を停止
+1. コントロールパネルから、 管理ツール > サービス > MySQL56 を停止
 1. コマンドプロンプトを管理者権限で起動
-1. `cd /d "E:\System\MySQL\MySQL Server 5.5\bin"`
-1. `mysqld -remove MySQL`
-1. コントロールパネル > プログラム > プログラムと機能 > MySQL Server 5.5 をアンインストール
-1. システム環境変数「Path」から`E:\System\MySQL\MySQL Server 5.5\bin;`を除去
+1. `cd /d "E:\System\MySQL\MySQL Server 5.6\bin"`
+1. `mysqld -remove MySQL56`
+  - Service successfully removed. と表示される
+1. コントロールパネルのプログラムと機能から
+  - MySQL Server 5.6 をアンインストール
+  - MySQL Installer - Community をアンインストール
 1. 必要に応じて `E:\System\MySQL\MySQL Server 5.5` を削除
 
 ## クライアント側
