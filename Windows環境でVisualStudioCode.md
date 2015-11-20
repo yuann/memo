@@ -60,13 +60,31 @@ hr {
 
 ## その他の設定
 必要に応じて `settings.json` へ追記。
-	
+
 ```json:settings.json
 {
 	// ウィンドウ幅に合わせて折り返し
 	"editor.wrappingColumn": 0,
-	
+
 	// 半角スペースやタブの表示
-	"editor.renderWhitespace": true
+	"editor.renderWhitespace": true,
+
+	// プロキシ設定
+	"http.proxy":"http://..."
 }
 ```
+
+## Extensionの導入
+
+### Install
+
+- `F1`を押す
+- `extensions`と入力していくと`Extensions: Install Extension`が候補に出てくるので選択
+- 続けてextension名を入力してEnter
+- extensionがインストールされる
+
+### Uninstall
+
+- `F1`を押す
+- `extensions`と入力していくと`Extensions: Show Installed Extensions`が候補に出てくるので選択
+- 対象extensionの:x:ボタンを押してアンインストール
