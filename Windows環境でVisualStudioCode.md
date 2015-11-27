@@ -63,14 +63,18 @@ hr {
 
 ```json:settings.json
 {
-	// ウィンドウ幅に合わせて折り返し
-	"editor.wrappingColumn": 0,
+    
+    // ウィンドウ幅に合わせて折り返し
+    "editor.wrappingColumn": 0,
+    
+    // 半角スペースやタブの表示
+    "editor.renderWhitespace": true,
+    
+    // タブでスペース挿入
+    "editor.insertSpaces": true,
 
-	// 半角スペースやタブの表示
-	"editor.renderWhitespace": true,
-
-	// プロキシ設定
-	"http.proxy":"http://..."
+    // プロキシ設定
+    "http.proxy":"http://..."
 }
 ```
 
